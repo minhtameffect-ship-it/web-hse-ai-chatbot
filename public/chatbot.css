@@ -1,0 +1,349 @@
+/* Reset & Base fonts */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f1f5f9;
+}
+
+/* Chatbot Container: Floating & Glassmorphism */
+#chatbot-container {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    width: 380px;
+    height: 600px;
+    max-height: calc(100vh - 110px); /* Đảm bảo không bị lấn ra ngoài màn hình */
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.75); /* Nền mờ */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3); /* shadow-2xl */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 99999;
+}
+
+#chatbot-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(30px) scale(0.95);
+}
+
+/* Chat Header */
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+}
+
+.chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Chấm xanh nhấp nháy (Online status) */
+.online-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #10b981; /* Xanh lục bảo */
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.title {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 16px;
+}
+
+/* Nút Header (Refresh & Close) */
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.header-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    color: #4b5563;
+    display: flex;
+}
+
+.header-actions button:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: #111827;
+}
+
+/* Refresh Spin 500ms animation */
+.animate-spin-fast {
+    animation: spin-fast 0.5s linear;
+}
+
+@keyframes spin-fast {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Vùng hiển thị tin nhắn */
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.message-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.message-wrapper.bot {
+    justify-content: flex-start;
+}
+
+.message-wrapper.user {
+    justify-content: flex-end;
+}
+
+.message {
+    max-width: 85%;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: break-word;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.message.bot {
+    background: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: 4px;
+    color: #1f2937;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+}
+
+.message.user {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+}
+
+/* Typing animation 3 dấu chấm nhảy */
+.typing-indicator {
+    display: flex;
+    gap: 6px;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    width: fit-content;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: #9ca3af;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* Input form */
+.chat-input-area {
+    padding: 16px;
+    border-top: 1px solid rgba(229, 231, 235, 0.6);
+    display: flex;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.chat-input-area input {
+    flex: 1;
+    padding: 12px 18px;
+    border-radius: 24px;
+    border: 1px solid #d1d5db;
+    outline: none;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.chat-input-area input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.chat-input-area button {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+}
+
+.chat-input-area button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+/* Hover mượt */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+    border-radius: 10px;
+}
+
+/* Markdown Rendering (.chat-markdown) */
+.chat-markdown p {
+    margin-bottom: 12px;
+    line-height: inherit;
+}
+.chat-markdown p:last-child {
+    margin-bottom: 0;
+}
+.chat-markdown ul {
+    margin-left: 20px;
+    margin-bottom: 12px;
+    list-style-type: disc;
+}
+.chat-markdown ol {
+    margin-left: 20px;
+    margin-bottom: 12px;
+    list-style-type: decimal;
+}
+.chat-markdown li {
+    margin-bottom: 6px;
+}
+/* In đậm với màu Accent */
+.chat-markdown strong {
+    font-weight: 700;
+    color: #2563eb; 
+}
+.message.user .chat-markdown strong {
+    color: #ffffff; /* Trái ngược ở tin nhắn user */
+}
+/* Inline/Block Code */
+.chat-markdown code {
+    background: #1f2937;
+    color: #f3f4f6;
+    padding: 3px 6px;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Fira Code', 'Roboto Mono', monospace;
+    font-size: 13.5px;
+}
+.message.user .chat-markdown code {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+.chat-markdown pre {
+    background: #1f2937;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin-bottom: 12px;
+}
+.chat-markdown pre code {
+    background: transparent;
+    padding: 0;
+    color: #f8fafc;
+}
+/* Trích dẫn (Blockquote) */
+.chat-markdown blockquote {
+    border-left: 4px solid #9ca3af;
+    padding-left: 14px;
+    margin-left: 0;
+    margin-bottom: 12px;
+    color: #4b5563;
+    font-style: italic;
+    background: rgba(156, 163, 175, 0.1);
+    border-radius: 0 6px 6px 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+/* Nút Float Icon */
+#chat-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1e40af);
+    color: white;
+    border: none;
+    box-shadow: 0 15px 25px -5px rgba(37, 99, 235, 0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#chat-toggle:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 30px -5px rgba(37, 99, 235, 0.5);
+}
+
+/* Responsive Mobiles */
+@media (max-width: 480px) {
+    #chatbot-container {
+        width: calc(100vw - 32px);
+        height: calc(100vh - 120px);
+        bottom: 100px;
+        right: 16px;
+        left: 16px;
+    }
+    #chat-toggle {
+        right: 16px;
+        bottom: 16px;
+    }
+}
