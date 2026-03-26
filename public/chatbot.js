@@ -66,8 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const typingEl = showTyping();
 
         try {
-            // POST to Chatbot Backend
-            const response = await fetch('http://localhost:3000/api/chat', {
+            // POST to Chatbot Backend (Vercel)
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: chatHistory })
