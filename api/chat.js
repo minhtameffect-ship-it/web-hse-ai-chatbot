@@ -2,14 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const OpenAI = require('openai');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        // Đọc dữ liệu từ file để làm context (System Prompt)
-        const systemContextPath = path.join(process.cwd(), 'chatbot_data.txt');
+        // Sử dụng __dirname để Vercel NFT có thể trace file tĩnh
+        const systemContextPath = path.join(__dirname, '..', 'chatbot_data.txt');
         const systemContext = fs.readFileSync(systemContextPath, 'utf8');
 
         // Khởi tạo client OpenAI với cấu hình tùy chỉnh
