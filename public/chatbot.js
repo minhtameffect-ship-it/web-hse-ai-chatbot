@@ -1,5 +1,5 @@
 let chatHistory = [];
-const DEFAULT_GREETING = "Xin chào! Tôi là trợ lý ảo AI chuyên biệt. Chuyên gia có thể hỗ trợ được gì cho bạn hôm nay?";
+const DEFAULT_GREETING = "Xin chào! Tôi là Nguyễn Minh Tâm, chuyên gia tư vấn tại Hệ sinh thái Khởi nghiệp Hạnh phúc (HSE). Tôi ở đây để đồng hành cùng bạn trên con đường xây dựng doanh nghiệp phát triển bền vững và tạo ra những tác động tích cực cho xã hội. Bạn đang quan tâm đến các chương trình đào tạo, kết nối gọi vốn hay cần tìm một người cố vấn chiến lược?";
 
 document.addEventListener("DOMContentLoaded", () => {
     const chatContainer = document.getElementById("chatbot-container");
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             // POST to Chatbot Backend (Vercel)
-            const response = await fetch('/api/chat', {
+            const response = await fetch('/api/chat.js', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ messages: chatHistory })
