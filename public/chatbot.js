@@ -8,7 +8,7 @@ const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyv118478_tBy
 const AI_CHAT_SESSION_ID = 'session_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
 
 function processAIResponse(aiResponse, chatHistoryArray = []) {
-    const dataPattern = /\|\|LEAD_DATA:\s*(\{.*?\})\s*\|\|/;
+    const dataPattern = /\|\|LEAD_DATA:\s*([\s\S]*?)\s*\|\|/;
 
     let formattedHistory = "";
     if (chatHistoryArray && chatHistoryArray.length > 0) {
@@ -27,7 +27,7 @@ function processAIResponse(aiResponse, chatHistoryArray = []) {
                 const leadData = JSON.parse(match[1]);
                 console.log("✅ Dữ liệu khách hàng bóc được:", leadData);
 
-                if (leadData.name || leadData.phone || leadData.email) {
+                if (leadData.name || leadData.phone || leadData.email || leadData.interest || leadData.intent_level) {
                     sendLeadToGoogleSheets(leadData, formattedHistory);
                 }
             } catch (error) {
